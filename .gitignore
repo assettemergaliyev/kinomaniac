@@ -1,0 +1,24 @@
+# Python virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Local secrets
+.env
+.env.*
+!.env.example
+
+# Pytest cache
+.pytest_cache/
+
+# Editor settings
+.vscode/
+
+# Резервные копии
+*.bak
+
+# Учебные материалы
+Инструкция для студентов.pdf
+Киноманьяк.png
