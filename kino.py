@@ -1,4 +1,5 @@
 import sys
+
 from openai import APIConnectionError, APIStatusError, LengthFinishReasonError, OpenAI
 import json
 from typing import Literal
@@ -114,6 +115,7 @@ def log_call(
     outcome: str,
     ids: list[str],
     rejected: list[str] | None = None,
+    usage: dict | None = None,
 ) -> None:
     # Сохраняем результат вызова модели в журнал
     record = {
@@ -122,6 +124,7 @@ def log_call(
         "ids": ids,
         "outcome": outcome,
         "rejected": rejected if rejected is not None else [],
+        "usage": usage,
     }
 
     with open("calls.jsonl", "a", encoding="utf-8") as file:
@@ -129,12 +132,14 @@ def log_call(
 
 def pick(client, model: str, query: str, films: list[dict]) -> tuple[str, list[str]]:
 
+    usage = None
+
     def finish(
         outcome: str,
         ids: list[str],
         rejected: list[str] | None = None,
     ) -> tuple[str, list[str]]:
-        log_call(model, query, outcome, ids, rejected)
+        log_call(model, query, outcome, ids, rejected, usage)
         return outcome, ids
 
     # Запрашиваем рекомендации у модели
@@ -159,6 +164,11 @@ def pick(client, model: str, query: str, films: list[dict]) -> tuple[str, list[s
         # Ошибка структуры ответа модели
         print(f"Ошибка валидации схемы: {error}")
         return finish("invalid", [])
+
+    # Статистика токенов может отсутствовать в ответе
+    response_usage = getattr(response, "usage", None)
+    usage = response_usage.model_dump() if response_usage else None
+
     choice = response.choices[0]
     message = choice.message
 

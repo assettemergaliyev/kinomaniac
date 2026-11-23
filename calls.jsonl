@@ -42,3 +42,4 @@
 {"model": "qwen3.5:4b", "request": "Хочу посмотреть фильм продолжительностью ровно 999 минут", "ids": [], "outcome": "invalid", "rejected": []}
 {"model": "qwen3.5:4b", "request": "Хочу посмотреть фильм продолжительностью ровно 999 минут", "ids": [], "outcome": "invalid", "rejected": []}
 {"model": "qwen3.5:4b", "request": "Хочу посмотреть фильм продолжительностью ровно 999 минут", "ids": [], "outcome": "invalid", "rejected": []}
+{"model": "qwen3.5:4b", "request": "Посоветуй фантастический фильм про космос", "ids": ["film_033"], "outcome": "ok", "rejected": [], "usage": {"completion_tokens": 98, "prompt_tokens": 2050, "total_tokens": 2148, "completion_tokens_details": null, "prompt_tokens_details": {"audio_tokens": null, "cache_write_tokens": null, "cached_tokens": 0, "image_tokens": null, "text_tokens": null}}}
